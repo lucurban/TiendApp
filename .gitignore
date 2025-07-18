@@ -1,0 +1,15 @@
+# Excel temporary files
+~$*
+*.tmp
+*.temp
+
+# Excel backup files
+*.bak
+
+# Excel AutoRecover files
+*.asd
+
+# Other Excel files that are often ignored
+*.xlk
+*.xlw
+.DS_Store
