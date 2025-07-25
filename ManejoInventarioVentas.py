@@ -4,28 +4,28 @@ Este programa hace registro de ventas y modifica el inventario de una tienda
 # --- Importar paquetes
 import pandas as pd
 
-inventario = 'Inventario.xlsx'
+# --- Definir la clase inventario
+class inventario:
+    def __init__(self, inv, prod):
+        self.inventario = inv
+        self.producto = prod
 
-df_inventario = pd.read_excel(inventario)
+    # --- Metodo de lectura del inventario
+    def leer(self):
+        df_inventario = pd.read_excel(self.inventario)
 
-print(df_inventario)
+        for index, row in df_inventario.iterrows():
+            if row['Producto'] == self.producto:
+                print(f'En inventario quedan {row['Cantidad']} {row['Unidad']} de {producto}')
 
+# --- Declarar hoja de datos
+datos = 'Inventario.xlsx'
 
-print(df_inventario['Cantidad'] = )
+# --- Definir producto a revisar
+producto = 'Splash Victoria Secret'
 
-'''
-df_add_inventario = pd.DataFrame([['Loción California', 16, 'und']],
-                     index=[7],
-                     columns=['Producto', 'Cantidad', 'Unidad'])
+# --- Definir data frame como un objeto de la clase inventario
+df_inventario = inventario(datos, producto)
 
-with pd.ExcelWriter(inventario, mode='a') as writer:
-    df_add_inventario.to_excel(writer, 'sheet2')
-    
-print(df_inventario)
-
-producto = input('producto: ')
-
-verificar = df_inventario['Cantidad'] = producto
-
-print(verificar)
-'''
+# --- Leer el data frame
+df_inventario.leer()
