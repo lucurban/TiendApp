@@ -2,9 +2,11 @@
 ~$*
 *.tmp
 *.temp
+*.xlsx#
 
 # Excel backup files
 *.bak
+pruebas.py
 
 # Excel AutoRecover files
 *.asd
