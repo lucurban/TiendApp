@@ -40,37 +40,65 @@ class tienda:
                 else:
                     print('La unidad especificada no es correcta')
 
-        nuevo_producto = pd.DataFrame({'Producto': [self.producto],
+        precio_compra = int(input('Ingresa el precio de compra: '))
+        precio_venta = int(input('Ingresa el precio de venta: '))
+        utilidad = precio_venta - precio_compra
+
+        df_nuevo_producto = pd.DataFrame({'Producto': [self.producto],
                                        'Cantidad': [cantidad],
-                                       'Unidad': [unidad]}) 
-        
+                                       'Unidad': [unidad]
+                                       }) 
+
+        df_precios_np = pd.DataFrame({'Producto': [self.producto],
+                                   'Precio Compra': [precio_compra],
+                                   'Precio Venta': [precio_venta],
+                                   'Utilidad': [utilidad]
+                                   })
+
         try:
-            df_inventario = pd.read_excel(self.inventario)
+            df_inventario = pd.read_excel(self.inventario, sheet_name='Inventario')
+            #df_precios = pd.read_excel(self.inventario, sheet_name='precios')
             cant_productos = len(df_inventario)
 
             with pd.ExcelWriter('Inventario_1.xlsx', 
                                 mode='a',
                                 if_sheet_exists='overlay'
                                 ) as writer:
-                nuevo_producto.to_excel(writer,
-                                        sheet_name='Inventario',
-                                        startrow=cant_productos+1,
-                                        index=False,
-                                        header=False
-                                        )
+                df_nuevo_producto.to_excel(writer,
+                                           sheet_name='Inventario',
+                                           startrow=cant_productos+1,
+                                           index=False,
+                                           header=False
+                                           )
+                
+                df_precios_np.to_excel(writer,
+                                       sheet_name='precios',
+                                       startrow=cant_productos+1,
+                                       index=False,
+                                       header=False
+                                       )
 
             return f'{self.producto} se agrego al inventario con exito'
         
         except FileNotFoundError:
             with pd.ExcelWriter('Inventario_1.xlsx',
                                 mode='w') as writer:
-                nuevo_producto.to_excel(writer,
-                                        sheet_name='Inventario',
-                                        index=False
-                                        )
+                df_nuevo_producto.to_excel(writer,
+                                           sheet_name='Inventario',
+                                           index=False
+                                           )
                 
+                df_precios_np.to_excel(writer,
+                                       sheet_name='precios',
+                                       startrow=cant_productos+1,
+                                       index=False
+                                       )
 
             return f'{self.producto} se agrego al inventario con exito'
+        
+    # --- Metodo para actualizar los precios del inventario
+    def actualizar_precios(self):
+        pass
         
     # --- Metodo para vender productos
     def vender(self):
@@ -84,7 +112,7 @@ class tienda:
 
             for index, row in df_inventario.iterrows():
                 if row['Producto'] == nuevo_prod:
-                    fecha = pd.Timestamp.today().normalize()
+                    fecha = pd.Timestamp.today().date()
                     cant_inv = row['Cantidad']
                     und = row['Unidad']
 
@@ -144,12 +172,13 @@ class tienda:
                                               index=False, 
                                               header=True
                                               )
+                    
+                    print('Venta registrada con exito')
+                    print('Vuelve pronto!')
 
                 else:
                     print('La opción ingresada no es valida')
                     resp_correcta = False
-
-                print('Venta registrada con exito')
 
                 #Continuar aqui
 
@@ -224,8 +253,10 @@ else:
             resp_correcta = False
 
 
-df_inv = pd.read_excel(inv)
-print(df_inv)
+
+
+#df_inv = pd.read_excel(inv)
+#print(df_inv)
 
 # --- Vender productos
 prod_venta = input('¿Que producto deseas? ')
