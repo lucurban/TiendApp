@@ -8,7 +8,7 @@ from openpyxl import load_workbook
 
 # --- Definir la clase inventario
 class tienda:
-    def __init__(self, inventario, producto):
+    def __init__(self, inventario, producto=''):
         self.inventario = inventario
         self.producto = producto
 
@@ -25,6 +25,20 @@ class tienda:
                 
         except FileNotFoundError:
             return False
+        
+    # --- Metodo para revisar el inventario
+    def revisar(self):
+        try:
+            df_inventario = pd.read_excel(self.inventario)
+
+            print(df_inventario)
+
+            #return True
+
+        except FileNotFoundError:
+            print('Aun no se ha creado un inventario')
+
+            #return False
 
     # --- Metodo para agregar un producto al inventario
     def agregar(self):
@@ -57,10 +71,11 @@ class tienda:
 
         try:
             df_inventario = pd.read_excel(self.inventario, sheet_name='Inventario')
-            #df_precios = pd.read_excel(self.inventario, sheet_name='precios')
+            df_precios = pd.read_excel(self.inventario, sheet_name='Precios')
             cant_productos = len(df_inventario)
+            cant_prod_precios = len(df_precios)
 
-            with pd.ExcelWriter('Inventario_1.xlsx', 
+            with pd.ExcelWriter(self.inventario, 
                                 mode='a',
                                 if_sheet_exists='overlay'
                                 ) as writer:
@@ -73,15 +88,15 @@ class tienda:
                 
                 df_precios_np.to_excel(writer,
                                        sheet_name='precios',
-                                       startrow=cant_productos+1,
+                                       startrow=cant_prod_precios+1,
                                        index=False,
                                        header=False
                                        )
 
-            return f'{self.producto} se agrego al inventario con exito'
+            print(f'{self.producto} se agrego al inventario con exito')
         
         except FileNotFoundError:
-            with pd.ExcelWriter('Inventario_1.xlsx',
+            with pd.ExcelWriter(self.inventario,
                                 mode='w') as writer:
                 df_nuevo_producto.to_excel(writer,
                                            sheet_name='Inventario',
@@ -89,12 +104,11 @@ class tienda:
                                            )
                 
                 df_precios_np.to_excel(writer,
-                                       sheet_name='precios',
-                                       startrow=cant_productos+1,
+                                       sheet_name='Precios',
                                        index=False
                                        )
 
-            return f'{self.producto} se agrego al inventario con exito'
+            print(f'{self.producto} se agrego al inventario con exito')
         
     # --- Metodo para actualizar los precios del inventario
     def actualizar_precios(self):
@@ -184,15 +198,74 @@ class tienda:
 
 
 # --- Declarar hoja de datos
-inv = 'Inventario_1.xlsx'
+inv = 'Tienda.xlsx'
+
+# --- Definir el inventario como un objeto de la clase tienda
+inventario = tienda(inv)
+
+# --- Menu principal
+print('\nBienvenido a la tienda')
+
+opcion_valida = False
+
+while opcion_valida == False:
+    print('\n¿Qué deseas hacer?')
+
+    opcion = int(input('1 -> Revisar el inventario \n' \
+                       '2 -> Agregar productos al inventario \n' \
+                       '3 -> Vender productos \n' \
+                       '4 -> Salir \n' \
+                       '\nIngresa el numero de la opcion deseada: '))
+
+    if (opcion < 1) or (opcion > 4):
+        print('La opción ingresada no es valida')
+        print('Por favor ingresa un numero del 1 al 4')
+
+        opcion_valida = False
+
+    elif opcion == 1:
+        inventario.revisar()
+
+        opcion_valida = False
+
+    elif opcion == 2:
+        prod = input('¿Que producto deseas agregar al inventario? ')
+        
+        inventario = tienda(inv, prod)
+
+        prod_en_inventario = inventario.leer_inventario()
+
+        if prod_en_inventario:
+            print(f'{prod} ya se encuentra en el inventario')
+
+        else:
+            inventario.agregar()
+        
+        opcion_valida = False
+
+
+    elif opcion == 3:
+        prod_venta = input('¿Que producto deseas? ')
+
+        venta = tienda(inv, prod_venta)
+
+        venta.vender()
+
+        opcion_valida = False
+
+    elif opcion == 4:
+        print('Hasta pronto!')
+        opcion_valida = True
+
+
+'''#exit()
 
 # --- Definir producto a revisar
 #prod = 'Esencia'
-prod = 'Bolsa de Regalo'
+#prod = 'Bolsa de Regalo'
 #prod = 'Splash Pink'
 
-# --- Definir el inventario como un objeto de la clase tienda
-inventario = tienda(inv, prod)
+
 
 # --- Leer el inventario
 prod_en_inventario = inventario.leer_inventario()
@@ -264,4 +337,4 @@ prod_venta = input('¿Que producto deseas? ')
 # --- Definir venta como un objeto de la clase tienda
 venta = tienda(inv, prod_venta)
 
-venta.vender()
+venta.vender()'''
