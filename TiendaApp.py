@@ -31,12 +31,12 @@ class tienda:
         try:
             df_inventario = pd.read_excel(self.inventario)
 
-            print(df_inventario)
+            print('\n', df_inventario)
 
             #return True
 
         except FileNotFoundError:
-            print('Aun no se ha creado un inventario')
+            print('\nAun no se ha creado un inventario')
 
             #return False
 
@@ -87,7 +87,7 @@ class tienda:
                                            )
                 
                 df_precios_np.to_excel(writer,
-                                       sheet_name='precios',
+                                       sheet_name='Precios',
                                        startrow=cant_prod_precios+1,
                                        index=False,
                                        header=False
@@ -116,19 +116,23 @@ class tienda:
         
     # --- Metodo para vender productos
     def vender(self):
-        df_venta = pd.DataFrame(columns=['Fecha', 'Producto', 'Cantidad', 'Unidad'])
-        df_inventario = pd.read_excel(self.inventario)
+        df_venta = pd.DataFrame(columns=['Fecha', 'Producto', 'Cantidad', 'Unidad', 'Precio', 'Subtotal'])
+        df_inventario = pd.read_excel(self.inventario, sheet_name='Inventario')
+        df_precios = pd.read_excel(self.inventario, sheet_name='Precios')
         nuevo_prod = self.producto
         agregar_producto = True
 
         while agregar_producto:
-            resp_correcta = False
 
             for index, row in df_inventario.iterrows():
                 if row['Producto'] == nuevo_prod:
                     fecha = pd.Timestamp.today().date()
                     cant_inv = row['Cantidad']
                     und = row['Unidad']
+
+            for index, row in df_precios.iterrows():
+                if row['Producto'] == nuevo_prod:
+                    precio = row['Precio Venta']
 
             if cant_inv > 0:
                 if und == 'unidades':
@@ -137,10 +141,17 @@ class tienda:
                 elif und == 'gramos':
                     cant = int(input(f'cuantos {und} de {nuevo_prod} deseas: '))
 
-            df_venta.loc[len(df_venta)] = [fecha, nuevo_prod, cant, und]
+            subtotal = cant * precio
+
+            df_venta.loc[len(df_venta)] = [fecha, nuevo_prod, cant, und, precio, subtotal]
+
+            total = df_venta['Subtotal'].sum()
+
+            resp_correcta = False
 
             while resp_correcta == False:
                 print(df_venta)
+                print(f'Total a pagar: {total}')
 
                 otro_prod = input('¿Deseas algo mas? s|n: ')
 
@@ -165,7 +176,7 @@ class tienda:
                     if 'ventas' in hojas:
                         df_ventas_dia = pd.read_excel(self.inventario, sheet_name='ventas')
 
-                        with pd.ExcelWriter('Inventario_1.xlsx',
+                        with pd.ExcelWriter(self.inventario,
                                             mode='a',
                                             if_sheet_exists='overlay'
                                             ) as writer:
@@ -177,7 +188,7 @@ class tienda:
                                               )
                             
                     else:
-                        with pd.ExcelWriter('Inventario_1.xlsx',
+                        with pd.ExcelWriter(self.inventario,
                                             mode='a',
                                             if_sheet_exists='new'
                                             ) as writer:
@@ -193,8 +204,6 @@ class tienda:
                 else:
                     print('La opción ingresada no es valida')
                     resp_correcta = False
-
-                #Continuar aqui
 
 
 # --- Declarar hoja de datos
@@ -212,7 +221,7 @@ while opcion_valida == False:
     print('\n¿Qué deseas hacer?')
 
     opcion = int(input('1 -> Revisar el inventario \n' \
-                       '2 -> Agregar productos al inventario \n' \
+                       '2 -> Agregar un producto al inventario \n' \
                        '3 -> Vender productos \n' \
                        '4 -> Salir \n' \
                        '\nIngresa el numero de la opcion deseada: '))
@@ -255,6 +264,7 @@ while opcion_valida == False:
 
     elif opcion == 4:
         print('Hasta pronto!')
+
         opcion_valida = True
 
 
