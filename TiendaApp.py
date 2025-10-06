@@ -162,6 +162,8 @@ class tienda:
                     resp_correcta = True
 
                 elif otro_prod == 'n':
+                    print(df_venta)
+                    print(f'Total a pagar: {total}')
                     agregar_producto = False
                     resp_correcta = True
 
@@ -173,15 +175,15 @@ class tienda:
                         hojas = []
 
 
-                    if 'ventas' in hojas:
-                        df_ventas_dia = pd.read_excel(self.inventario, sheet_name='ventas')
+                    if 'Ventas' in hojas:
+                        df_ventas_dia = pd.read_excel(self.inventario, sheet_name='Ventas')
 
                         with pd.ExcelWriter(self.inventario,
                                             mode='a',
                                             if_sheet_exists='overlay'
                                             ) as writer:
                             df_venta.to_excel(writer,
-                                              sheet_name='ventas', 
+                                              sheet_name='Ventas', 
                                               startrow=len(df_ventas_dia)+1, 
                                               index=False, 
                                               header=False
@@ -193,19 +195,45 @@ class tienda:
                                             if_sheet_exists='new'
                                             ) as writer:
                             df_venta.to_excel(writer,
-                                              sheet_name='ventas', 
+                                              sheet_name='Ventas', 
                                               index=False, 
                                               header=True
                                               )
                     
                     print('Venta registrada con exito')
                     print('Vuelve pronto!')
+                    return df_venta
 
                 else:
                     print('La opción ingresada no es valida')
                     resp_correcta = False
 
+    # --- Metodo para actualizar el inventario despues de una venta
+    def actualizar_inventario(self, venta):
+        print('Actualizando inventario...')
+        df_venta = venta
+        df_inventario = pd.read_excel(self.inventario, sheet_name='Inventario')
 
+        for index, row in df_venta.iterrows():
+                for index2, row2 in df_inventario.iterrows():
+                    if row['Producto'] == row2['Producto']:
+                            row2['Cantidad'] = row2['Cantidad'] - row['Cantidad']
+                            df_inventario.at[index2, 'Cantidad'] = row2['Cantidad']
+                            
+        with pd.ExcelWriter(self.inventario,
+                            mode='a',
+                            if_sheet_exists='overlay'
+                            ) as writer:
+             df_inventario.to_excel(writer,
+                               sheet_name='Inventario', 
+                               index=False, 
+                               header=True
+                               )
+
+        print('Inventario actualizado con exito')
+
+
+# --- Inicio del programa principal
 # --- Declarar hoja de datos
 inv = 'Tienda.xlsx'
 
@@ -257,8 +285,9 @@ while opcion_valida == False:
         prod_venta = input('¿Que producto deseas? ')
 
         venta = tienda(inv, prod_venta)
+        ultima_venta = venta.vender()
 
-        venta.vender()
+        inventario.actualizar_inventario(ultima_venta)
 
         opcion_valida = False
 
@@ -266,85 +295,3 @@ while opcion_valida == False:
         print('Hasta pronto!')
 
         opcion_valida = True
-
-
-'''#exit()
-
-# --- Definir producto a revisar
-#prod = 'Esencia'
-#prod = 'Bolsa de Regalo'
-#prod = 'Splash Pink'
-
-
-
-# --- Leer el inventario
-prod_en_inventario = inventario.leer_inventario()
-
-resp_correcta = False
-
-try:
-    df_inv = pd.read_excel(inv)
-
-# --- Agregar un productos al inventario
-except FileNotFoundError:
-    print(f'{prod} no se encuentra en el inventario')
-
-    nuevo_prod = input(f'¿Deseas incluir {prod} en el inventario? s|n: ')
-
-    while resp_correcta == False:
-        if nuevo_prod == 's':
-            agregar = inventario.agregar()
- 
-            print(agregar)
-
-            resp_correcta = True
-
-        elif nuevo_prod == 'n':
-            print(f'{prod} no será agregado al inventario')
-                
-            resp_correcta = True
-
-        else:
-            resp_correcta = False
-
-# --- Leer el inventario
-if prod_en_inventario:
-    for index, row in df_inv.iterrows():
-        if row['Producto'] == prod:
-            print(f'En inventario quedan {row['Cantidad']} {row['Unidad']} de {row['Producto']}')
-
-# --- Agregar un producto al inventario
-else:
-    while resp_correcta == False:
-        print(f'{prod} no se encuentra en el inventario')
-
-        nuevo_prod = input(f'¿Deseas incluir {prod} en el inventario? s|n: ')
-
-        if nuevo_prod == 's':
-            agregar = inventario.agregar()
- 
-            print(agregar)
-
-            resp_correcta = True
-
-        elif nuevo_prod == 'n':
-            print(f'{prod} no será agregado al inventario')
-                
-            resp_correcta = True
-
-        else:
-            resp_correcta = False
-
-
-
-
-#df_inv = pd.read_excel(inv)
-#print(df_inv)
-
-# --- Vender productos
-prod_venta = input('¿Que producto deseas? ')
-
-# --- Definir venta como un objeto de la clase tienda
-venta = tienda(inv, prod_venta)
-
-venta.vender()'''
