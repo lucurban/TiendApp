@@ -123,12 +123,31 @@ class tienda:
         agregar_producto = True
 
         while agregar_producto:
-
+            prod_en_inventario = True
+            contador = 0
+            
             for index, row in df_inventario.iterrows():
                 if row['Producto'] == nuevo_prod:
                     fecha = pd.Timestamp.today().date()
                     cant_inv = row['Cantidad']
                     und = row['Unidad']
+                    contador += 1
+
+                if (contador < 1) or (contador > 1):
+                    prod_en_inventario = False
+
+                else:
+                    prod_en_inventario = True
+
+            if prod_en_inventario == False:  
+                print(f'Lo siento, no tengo {nuevo_prod}')
+                print('Estos son los productos que te puedo ofrecer:')
+                    
+                for index, row in df_inventario.iterrows():
+                    print(f'- {row['Producto']} ({row['Cantidad']} {row['Unidad']})')
+
+                nuevo_prod = input('¿Que producto deseas?: ')
+                continue
 
             for index, row in df_precios.iterrows():
                 if row['Producto'] == nuevo_prod:
@@ -243,9 +262,9 @@ inventario = tienda(inv)
 # --- Menu principal
 print('\nBienvenido a la tienda')
 
-opcion_valida = False
+salir = False
 
-while opcion_valida == False:
+while salir == False:
     print('\n¿Qué deseas hacer?')
 
     opcion = int(input('1 -> Revisar el inventario \n' \
@@ -258,12 +277,12 @@ while opcion_valida == False:
         print('La opción ingresada no es valida')
         print('Por favor ingresa un numero del 1 al 4')
 
-        opcion_valida = False
+        salir = False
 
     elif opcion == 1:
         inventario.revisar()
 
-        opcion_valida = False
+        salir = False
 
     elif opcion == 2:
         prod = input('¿Que producto deseas agregar al inventario? ')
@@ -277,8 +296,8 @@ while opcion_valida == False:
 
         else:
             inventario.agregar()
-        
-        opcion_valida = False
+
+        salir = False
 
 
     elif opcion == 3:
@@ -289,9 +308,9 @@ while opcion_valida == False:
 
         inventario.actualizar_inventario(ultima_venta)
 
-        opcion_valida = False
+        salir = False
 
     elif opcion == 4:
         print('Hasta pronto!')
 
-        opcion_valida = True
+        salir = True
