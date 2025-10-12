@@ -33,12 +33,49 @@ class tienda:
 
             print('\n', df_inventario)
 
-            #return True
-
         except FileNotFoundError:
             print('\nAun no se ha creado un inventario')
 
-            #return False
+    # --- Metodo para actualizar el inventario
+    def actualizar_inventario(self, producto):
+        df_inventario = pd.read_excel(self.inventario, sheet_name='Inventario')
+        contador = 0
+
+        for index, row in df_inventario.iterrows():
+            if row['Producto'] == producto:
+                contador += 1
+                fila = index
+
+        if contador < 1:
+            print(f'{producto} no se encuentra en el inventario')
+
+        elif contador == 1:
+            print(f'{producto} se encuentra en el inventario')
+            print(f'Actualmente hay {df_inventario.at[fila, "Cantidad"]} {df_inventario.at[fila, "Unidad"]} de {producto}')
+
+            if df_inventario.at[fila, 'Unidad'] == 'unidades':
+                nueva_cant = int(input(f'¿Cuántas unidades de {producto} deben haber en el inventario? '))
+                df_inventario.at[fila, 'Cantidad'] = nueva_cant
+
+            elif df_inventario.at[fila, 'Unidad'] == 'gramos':
+                nueva_cant = int(input(f'¿Cuántos gramos de {producto} deben haber en el inventario? '))
+                df_inventario.at[fila, 'Cantidad'] = nueva_cant
+
+            with pd.ExcelWriter(self.inventario,
+                                mode='a',
+                                if_sheet_exists='overlay'
+                                ) as writer:
+                 df_inventario.to_excel(writer,
+                                   sheet_name='Inventario', 
+                                   index=False, 
+                                   header=True
+                                   )
+
+            print(f'El inventario de {producto} se actualizo con exito')
+            print(f'Ahora hay {nueva_cant} {df_inventario.at[fila, "Unidad"]} de {producto} en el inventario')
+
+        else:
+            print(f'Error: Hay {contador} registros de {producto} en el inventario')
 
     # --- Metodo para agregar un producto al inventario
     def agregar(self):
@@ -228,7 +265,7 @@ class tienda:
                     resp_correcta = False
 
     # --- Metodo para actualizar el inventario despues de una venta
-    def actualizar_inventario(self, venta):
+    def actualizar_inventario_venta(self, venta):
         print('Actualizando inventario...')
         df_venta = venta
         df_inventario = pd.read_excel(self.inventario, sheet_name='Inventario')
@@ -268,14 +305,15 @@ while salir == False:
     print('\n¿Qué deseas hacer?')
 
     opcion = int(input('1 -> Revisar el inventario \n' \
-                       '2 -> Agregar un producto al inventario \n' \
-                       '3 -> Vender productos \n' \
-                       '4 -> Salir \n' \
+                       '2 -> Actualizar el inventario \n' \
+                       '3 -> Agregar un producto al inventario \n' \
+                       '4 -> Vender productos \n' \
+                       '5 -> Salir \n' \
                        '\nIngresa el numero de la opcion deseada: '))
 
-    if (opcion < 1) or (opcion > 4):
+    if (opcion < 1) or (opcion > 5):
         print('La opción ingresada no es valida')
-        print('Por favor ingresa un numero del 1 al 4')
+        print('Por favor ingresa un numero del 1 al 5')
 
         salir = False
 
@@ -285,6 +323,13 @@ while salir == False:
         salir = False
 
     elif opcion == 2:
+        act_producto = input('¿Que producto deseas actualizar? ')
+
+        inventario.actualizar_inventario(act_producto)
+
+        salir = False
+
+    elif opcion == 3:
         prod = input('¿Que producto deseas agregar al inventario? ')
         
         inventario = tienda(inv, prod)
@@ -300,17 +345,17 @@ while salir == False:
         salir = False
 
 
-    elif opcion == 3:
+    elif opcion == 4:
         prod_venta = input('¿Que producto deseas? ')
 
         venta = tienda(inv, prod_venta)
         ultima_venta = venta.vender()
 
-        inventario.actualizar_inventario(ultima_venta)
+        inventario.actualizar_inventario_venta(ultima_venta)
 
         salir = False
 
-    elif opcion == 4:
+    elif opcion == 5:
         print('Hasta pronto!')
 
         salir = True
