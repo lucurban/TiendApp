@@ -149,8 +149,65 @@ class tienda:
         
     # --- Metodo para actualizar los precios del inventario
     def actualizar_precios(self):
-        pass
-        
+        df_precios = pd.read_excel(self.inventario, sheet_name='Precios')
+        contador = 0
+        act_precio = 's'
+
+        print('\n', df_precios)
+
+        while act_precio == 's':
+            act_precio = input('\n¿Deseas actualizar los precios de algún producto? s|n: ')
+            
+            if act_precio == 's':
+                producto = input('¿De que producto deseas actualizar sus precios? ')
+
+                for index, row in df_precios.iterrows():
+                    if row['Producto'] == producto:
+                        contador += 1
+                        fila = index
+
+                if contador < 1:
+                    print(f'{producto} no se encuentra en el inventario')
+
+                elif contador == 1:
+                    print(f'\n{producto} se encuentra en el inventario')
+                    print(f'Actualmente el precio de compra es {df_precios.at[fila, "Precio Compra"]}')
+                    print(f'Actualmente el precio de venta es {df_precios.at[fila, "Precio Venta"]}')
+                    print(f'Actualmente la utilidad es {df_precios.at[fila, "Utilidad"]}')
+
+                    nuevo_precio_compra = int(input(f'\n¿Cual debe ser el nuevo precio de compra de {producto}? '))
+                    nuevo_precio_venta = int(input(f'¿Cual debe ser el nuevo precio de venta de {producto}? '))
+                    nueva_utilidad = nuevo_precio_venta - nuevo_precio_compra
+
+                    df_precios.at[fila, 'Precio Compra'] = nuevo_precio_compra
+                    df_precios.at[fila, 'Precio Venta'] = nuevo_precio_venta
+                    df_precios.at[fila, 'Utilidad'] = nueva_utilidad
+
+                    with pd.ExcelWriter(self.inventario,
+                                        mode='a',
+                                        if_sheet_exists='overlay'
+                                        ) as writer:
+                        df_precios.to_excel(writer,
+                                        sheet_name='Precios', 
+                                        index=False, 
+                                        header=True
+                                        )
+
+                    print(f'\nLos precios de {producto} se actualizaron con exito')
+                    print(f'Ahora el precio de compra es {nuevo_precio_compra}')
+                    print(f'Ahora el precio de venta es {nuevo_precio_venta}')
+                    print(f'Ahora la utilidad es {nueva_utilidad}')
+
+                else:
+                    print(f'Error: Hay {contador} registros de {self.producto} en el inventario')
+
+            elif act_precio == 'n':
+                print('\nLos precios ya fueron actualizados')
+
+            else:
+                print('La opción ingresada no es valida')
+                act_precio = 's'
+
     # --- Metodo para vender productos
     def vender(self):
         df_venta = pd.DataFrame(columns=['Fecha', 'Producto', 'Cantidad', 'Unidad', 'Precio', 'Subtotal'])
@@ -183,9 +240,36 @@ class tienda:
                 for index, row in df_inventario.iterrows():
                     print(f'- {row['Producto']} ({row['Cantidad']} {row['Unidad']})')
 
-                nuevo_prod = input('¿Que producto deseas?: ')
-                continue
+                resp_correcta = False
 
+                while resp_correcta == False:
+                    otro_prod = input('\n¿Deseas algo mas? s|n: ')
+                    
+                    if otro_prod == 's':
+                        nuevo_prod = input('¿Que producto deseas?: ')
+                        
+                        for index, row in df_inventario.iterrows():
+                            if row['Producto'] == nuevo_prod:
+                                fecha = pd.Timestamp.today().date()
+                                cant_inv = row['Cantidad']
+                                und = row['Unidad']
+
+                        resp_correcta = True
+                        agregar_producto = True
+                    
+                    elif otro_prod == 'n':
+                        print('Vuelve pronto!')
+                        
+                        resp_correcta = True
+                        agregar_producto = False
+                                                
+                        return df_venta
+                    
+                    else:
+                        print('La opción ingresada no es valida')
+                        
+                        resp_correcta = False
+            
             for index, row in df_precios.iterrows():
                 if row['Producto'] == nuevo_prod:
                     precio = row['Precio Venta']
@@ -206,10 +290,10 @@ class tienda:
             resp_correcta = False
 
             while resp_correcta == False:
-                print(df_venta)
+                print('\n', df_venta)
                 print(f'Total a pagar: {total}')
 
-                otro_prod = input('¿Deseas algo mas? s|n: ')
+                otro_prod = input('\n¿Deseas algo mas? s|n: ')
 
                 if otro_prod == 's':
                     nuevo_prod = input('¿Que producto deseas?: ')
@@ -266,7 +350,7 @@ class tienda:
 
     # --- Metodo para actualizar el inventario despues de una venta
     def actualizar_inventario_venta(self, venta):
-        print('Actualizando inventario...')
+        print('\nActualizando inventario...')
         df_venta = venta
         df_inventario = pd.read_excel(self.inventario, sheet_name='Inventario')
 
@@ -306,14 +390,15 @@ while salir == False:
 
     opcion = int(input('1 -> Revisar el inventario \n' \
                        '2 -> Actualizar el inventario \n' \
-                       '3 -> Agregar un producto al inventario \n' \
-                       '4 -> Vender productos \n' \
-                       '5 -> Salir \n' \
+                       '3 -> Actualizar precios \n' \
+                       '4 -> Agregar un producto al inventario \n' \
+                       '5 -> Vender productos \n' \
+                       '6 -> Salir \n' \
                        '\nIngresa el numero de la opcion deseada: '))
 
-    if (opcion < 1) or (opcion > 5):
+    if (opcion < 1) or (opcion > 6):
         print('La opción ingresada no es valida')
-        print('Por favor ingresa un numero del 1 al 5')
+        print('Por favor ingresa un numero del 1 al 6')
 
         salir = False
 
@@ -330,6 +415,11 @@ while salir == False:
         salir = False
 
     elif opcion == 3:
+        inventario.actualizar_precios()
+
+        salir = False
+
+    elif opcion == 4:
         prod = input('¿Que producto deseas agregar al inventario? ')
         
         inventario = tienda(inv, prod)
@@ -344,9 +434,8 @@ while salir == False:
 
         salir = False
 
-
-    elif opcion == 4:
-        prod_venta = input('¿Que producto deseas? ')
+    elif opcion == 5:
+        prod_venta = input('\n¿Que producto deseas? ')
 
         venta = tienda(inv, prod_venta)
         ultima_venta = venta.vender()
@@ -355,7 +444,7 @@ while salir == False:
 
         salir = False
 
-    elif opcion == 5:
+    elif opcion == 6:
         print('Hasta pronto!')
 
         salir = True
