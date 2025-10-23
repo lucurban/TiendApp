@@ -372,6 +372,35 @@ class tienda:
 
         print('Inventario actualizado con exito')
 
+    # --- Metodo para resumir las ventas del dia
+    def resumen_ventas(self):
+        df_ventas = pd.read_excel(self.inventario, sheet_name='Ventas')
+        df_inventario = pd.read_excel(self.inventario, sheet_name='Inventario')
+                
+        df_ventas['Fecha'] = pd.to_datetime(df_ventas['Fecha']).dt.date
+        fecha = input('Ingresa la fecha (aaaa-mm-dd): ')
+        fecha = pd.to_datetime(fecha).date()
+        total_dia = 0
+        cant_prod = 0
+        total_prod = 0
+
+        print(f'\nResumen de ventas del dia {fecha}:')
+        
+        for index, row in df_inventario.iterrows():
+            for index1, row1 in df_ventas.iterrows(): 
+                if (row1['Fecha'] == fecha) and (row['Producto'] == row1['Producto']):
+                    cant_prod += row1['Cantidad']
+                    total_prod += row1['Subtotal']
+                    total_dia += row1['Subtotal']
+                    precio = row1['Precio']
+
+            print(f'- {row['Producto']}: {cant_prod} {row['Unidad']} a {precio} c/u. Subtotal: ${total_prod}')
+            
+            cant_prod = 0
+            total_prod = 0                
+
+        print(f'\nTotal de ventas del {fecha}: ${total_dia}')
+
 
 # --- Inicio del programa principal
 # --- Declarar hoja de datos
@@ -393,12 +422,13 @@ while salir == False:
                        '3 -> Actualizar precios \n' \
                        '4 -> Agregar un producto al inventario \n' \
                        '5 -> Vender productos \n' \
-                       '6 -> Salir \n' \
+                       '6 -> Resumen de ventas\n' \
+                       '7 -> Salir \n' \
                        '\nIngresa el numero de la opcion deseada: '))
 
-    if (opcion < 1) or (opcion > 6):
+    if (opcion < 1) or (opcion > 7):
         print('La opción ingresada no es valida')
-        print('Por favor ingresa un numero del 1 al 6')
+        print('Por favor ingresa un numero del 1 al 7')
 
         salir = False
 
@@ -445,6 +475,11 @@ while salir == False:
         salir = False
 
     elif opcion == 6:
+        inventario.resumen_ventas()
+
+        salir = False
+
+    elif opcion == 7:
         print('Hasta pronto!')
 
         salir = True
