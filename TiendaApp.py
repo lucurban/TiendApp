@@ -383,6 +383,7 @@ class tienda:
         total_dia = 0
         cant_prod = 0
         total_prod = 0
+        fecha_usuario = True
 
         print(f'\nResumen de ventas del dia {fecha}:')
         
@@ -394,12 +395,20 @@ class tienda:
                     total_dia += row1['Subtotal']
                     precio = row1['Precio']
 
-            print(f'- {row['Producto']}: {cant_prod} {row['Unidad']} a {precio} c/u. Subtotal: ${total_prod}')
-            
-            cant_prod = 0
-            total_prod = 0                
+            try:
+                print(f'- {row['Producto']}: {cant_prod} {row['Unidad']} a {precio} c/u. Subtotal: ${total_prod}')
 
-        print(f'\nTotal de ventas del {fecha}: ${total_dia}')
+                cant_prod = 0
+                total_prod = 0 
+
+            except UnboundLocalError:
+                    fecha_usuario = False
+                            
+        if fecha_usuario == True:
+            print(f'\nTotal de ventas del {fecha}: ${total_dia}')
+
+        else:
+            print('La fecha solicitada no registra ventas')
 
 
 # --- Inicio del programa principal
