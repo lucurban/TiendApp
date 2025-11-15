@@ -244,4 +244,53 @@ Es útil si en el futuro se desea compartir o ejecutar TiendaApp en otro entorno
 </ol>
 
 <h2>🌱 Aprendizajes y objetivos</h2>
+<p>
+  A lo largo del desarrollo de TiendaApp, pude fortalecer varios conceptos clave mientras construía un proyecto útil y completo. Este apartado resume lo que he aprendido   y también los objetivos que guiaron cada parte del proceso.
+</p>
+<h3>Aprendizajes</h3>
+<ul>
+  <li><strong>Estructurar un proyecto real:</strong> Pasé de una idea inicial a un programa organizado, con funciones claras y una clase principal que gestiona todo el         flujo de trabajo.</li>
+  <li><strong>Uso práctico de POO:</strong> Comprendí cómo encapsular la lógica dentro de métodos y cómo los atributos de una clase facilitan la gestión del estado             (producto, inventario, precios, etc.).</li>
+  <li><strong>Manipulación de archivos Excel:</strong> Implementé bloques try/except para evitar que el programa falle cuando un archivo no existe o cuando ocurre un            error controlado.</li>
+  <li><strong>Interacción con el usuario:</strong> Diseñé flujos claros con mensajes que guían la experiencia de quien usa la aplicación, asegurando que siempre sepa qué       hacer.</li>
+  <li><strong>Organización del código:</strong> Separé cada acción en métodos especializados, lo cual hace el código mucho más entendible y fácil de                            mantener.</li>
+</ul>
+<h3>Objetivos del proyecto</h3>
+<ul>
+  <li>Crear una pequeña herramienta que permita gestionar el inventario de una tienda de forma sencilla y clara.</li>
+  <li>Construir un flujo de ventas realista: elegir productos, validar existencias, registrar cada venta y actualizar inventarios.</li>
+  <li>Mantener un registro histórico de ventas por día, accesible para consultas posteriores.</li>
+  <li>Aprender a trabajar con archivos externos como base de datos ligera, mediante Excel.</li>
+  <li>Poner en práctica mis conocimientos de Python y fortalecer la lógica aplicada en un proyecto real.</li>
+  <li>Dejar una base sólida para futuras mejoras, como agregar una interfaz visual o automatizar reportes.</li>
+</ul>
+
 <h2>🚀 Próximos pasos</h2>
+<p>
+  TiendaApp ya funciona muy bien como herramienta básica de gestión, pero aún tiene muchísimo potencial para crecer. Estos son algunos de los próximos pasos que me         gustaría implementar para seguir llevándolo al siguiente nivel:
+</p>
+<h3>🌱 Mejoras técnicas</h3>
+<ul>
+  <li><strong>Optimizar el código</strong> para hacerlo más eficiente, eliminando repeticiones y aprovechando mejor las capacidades de Pandas y de la POO.</li>
+  <li><strong>Separar la lógica en módulos</strong> (por ejemplo: inventario, ventas, reportes), lo que hará el proyecto más fácil de mantener y escalar.</li>
+  <li><strong>Agregar validaciones más sólidas,</strong> como verificar tipos de datos o restringir valores inválidos en entradas del usuario.</li>
+  <li><strong>Crear una capa de servicios</strong> para manejar mejor la lectura y escritura de archivos Excel, evitando duplicación de código.</li>
+</ul>
+<h3> 🖥️ Nueva interfaz</h3>
+<ul>
+  <li><strong>Diseñar una interfaz gráfica simple</strong> (quizá con Tkinter o PyQt) para que la app sea más amigable y no dependa de la consola.</li>
+  <li><strong>Mostrar tablas de inventario y ventas de forma visual, </strong>(con botones para agregar, actualizar y vender productos.</li>
+</ul>
+<h3> 📊 Funcionalidades adicionales</h3>
+<ul>
+  <li><strong>Generar reportes automáticos</strong> en PDF o Excel con ventas diarias, semanales o mensuales.
+  <li><strong>Agregar control de stock mínimo,</strong> enviando alertas cuando un producto se está agotando.</li>
+  <li><strong>Historial por producto,</strong> para ver cómo ha variado su inventario y sus ventas en el tiempo.
+  <li><strong>Incluir autenticación o roles,</strong> por si varias personas llegaran a usar la aplicación.
+</ul>
+<h3> ☁️ Futuro más avanzado</h3>
+<ul>
+  <li><strong>Migrar la base de datos</strong> de Excel a SQLite o PostgreSQL para mayor seguridad y escalabilidad.
+  <li><strong>Convertir TiendaApp en una API,</strong> permitiendo conectarla a un frontend moderno o a una app móvil.</li>
+  <li><strong>Desplegarla en la nube</strong> y ofrecerla como servicio para pequeñas tiendas.
+</ul>
