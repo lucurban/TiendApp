@@ -171,3 +171,53 @@ Furthermore, pd.ExcelWriter is used to write to specific sheets, adding or overw
 <p>
   This makes the experience simple and practical, without the need for a graphical interface.
 </p>
+
+<h2>🔄 General Operating Flow</h2>
+<p>
+  TiendaApp is designed to mimic the daily operations of a real store, but from the console.
+</p>
+<p>
+  Each menu option represents an action that the salesperson might perform during their workday.
+</p>
+<p>
+  The general flow is organized into four main stages 👇
+</p>
+<ol>
+  <strong><li>🏁 Program Startup:</li></strong>
+  <p>
+  When TiendaApp is launched, the user is greeted with a welcome message and an interactive menu.
+    <p>
+    From there, they can choose what they want to do: check inventory, update prices, register a sale, or view a summary of the day.
+    </p>
+    <p>
+    Everything is managed with numbers, making the process quick and easy.
+    </p>
+  <strong><li>📋 Inventory Management</li></strong>
+    <p>
+      Inventory is the heart of the system.
+    </p>
+    <p>
+    The user can:
+      <ul>
+        <li>View existing products.</li>
+        <li>Add new items with their quantities, units, and prices.</li>
+        <li>Update the values ​​or stock of a product.</li>
+      </ul>
+    </p>
+    <p>
+      All this information is stored in the Tienda.xlsx file, within the Inventory and Prices sheets.
+    </p>
+  <strong><li>💰 Sales Log</li></strong>
+    When a sale is made, the program:
+  </p>
+  <p>
+  The program displays:
+  <ul>
+    <li>Which products were sold.</li>
+    <li>How many units.</li>
+    <li>The subtotals and the daily total.</li>
+  </ul>
+  </p>
+  <p>
+    This allows for clear control of profits and best-selling products.
+  </ol>
