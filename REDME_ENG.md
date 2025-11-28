@@ -53,9 +53,9 @@
   <code>
     TiendaApp/
     │
-    ├── TiendaApp.py           # Archivo principal del programa (punto de entrada)
-    ├── tienda.py              # Archivo que contiene la clase 'tienda' y sus métodos
-    ├── Tienda.xlsx            # Archivo Excel donde se guarda el inventario, precios y ventas              
+    ├── TiendaApp.py           # Main program file (entry point)
+    ├── tienda.py              # File containing the 'store' class and its methods
+    ├── Tienda.xlsx            # Excel file where inventory, prices, and sales are stored         
     └── README.md              # Project description and guide document
   </code>
 </p>
@@ -71,3 +71,103 @@
   </ul>
 <li><strong>README.md:</strong> Document explaining what the application does, how it is built, and what the user can achieve with it.</li>
 </ul>
+
+<h2>🧠 Applied Concepts</h2>
+<p>
+  TiendaApp combines several fundamental programming and data handling concepts in Python.
+</p>
+<p>
+  The idea is that the code not only works, but also provides a good foundation for learning and improving as a developer.
+</p>
+<h3>🧩 Object-Oriented Programming (OOP)</h3>
+<p>
+  The project is built around a class called Tienda (Store).
+</p>
+<p>
+  This class groups the data (such as inventory and sales) and the actions that can be performed on it (such as adding products, selling, or updating prices).
+</p>
+<p>
+  This approach allows you to:
+</p>
+  <ul>
+    <li>Reuse code in an organized way.</li>
+    <li>Maintain a clean and easily extensible structure.</li>
+    <li>Work with objects that represent real-world concepts (in this case, a store).</li>
+  </ul>
+<h3>📊 Data Handling with Pandas</h3>
+<p>
+  TiendaApp uses pandas to read, modify, and write data stored in Excel spreadsheets.
+</p>
+<p>
+  Thanks to its DataFrame structures, operations such as filtering products, calculating subtotals, or updating quantities are performed quickly and readably.
+</p>
+<p>
+Furthermore, pd.ExcelWriter is used to write to specific sheets, adding or overwriting information without losing the rest of the data in the file.
+</p>
+<h3>📘 Interaction with Excel Files (Openpyxl)</h3>
+<p>
+  The <strong>openpyxl</strong> library allows you to verify and manipulate the sheets within the Tienda.xlsx file. This makes it easy to check if sheets like              “Inventory” or “Sales” exist before writing to them, and to manage the data flow without errors.
+</p>
+<h3>💬 User Interaction</h3>
+<p>
+  The program runs in the console and guides the user with clear messages and step-by-step questions. This interaction makes TiendaApp intuitive, even for someone          without technical knowledge.
+</p>
+<h3>🔁 Modular Structure and Flow Logic</h3>
+<p>
+  The main program (TiendaApp.py) acts as a control point: it displays the menu, receives the options, and calls the corresponding methods of the Tienda class. This        creates a natural flow where the user can review, update, sell, or query without complications. 
+</p>
+
+<h2>📊 Technologies Used</h2>
+<p>
+  TiendaApp is developed entirely in Python, combining libraries that facilitate working with data, file persistence, and user interaction.
+</p>
+<p>
+  Below, I'll tell you about the main tools and why they were used 👇
+</p>
+<h3>🐍 Python 3</h3>
+<p>
+  The project's base language.
+<p>
+  Its clear and readable syntax makes it an excellent choice for creating applications that handle data and simple automations.
+</p>
+<p>
+  Furthermore, its multipurpose approach allows TiendaApp to easily grow with new features.
+</p>
+<h3>🧮 Pandas</h3>
+<p>
+  I  t's the backbone of data handling.
+</p>
+<p>
+  It allows you to work with DataFrame-type structures, which function like Excel tables within the code.
+</p>
+<p>
+  With pandas, TiendaApp can:
+<ul>
+  <li>Read and write data from specific sheets.</li>
+  <li>Calculate subtotals, totals, and profits.</li>
+  <li>Filter and update records with just a few lines of code.</li>
+</ul>
+</p>
+
+<h3>📗 Openpyxl</h3>
+<p>
+  It is used to interact directly with .xlsx files.
+</p>
+<p>
+  Thanks to this library, TiendaApp can:
+  <ul>
+    <li>Check if a sheet exists before writing to it.</li>
+    <li>Maintain the Excel file's formatting.</li>
+    <li>Add information without deleting previous data.</li>
+  </ul>
+</p>
+<h3>💻 Interactive Console</h3>
+<p>
+  Although not a library, the console is the primary means of user interaction.
+</p>
+<p>
+  Through guided questions, the program receives user input (such as product names or quantities) and responds with clear messages.
+</p>
+<p>
+  This makes the experience simple and practical, without the need for a graphical interface.
+</p>
