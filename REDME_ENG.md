@@ -40,3 +40,23 @@
 <p>
   Together, these features allow TiendaApp to act as a small digital store assistant: organized, reliable, and always ready to record a new sale.
 </p>
+
+<h2>🧩 Project Structure</h2>
+<p>
+  The project is organized in a simple way to make it easy to understand, modify, and extend.
+</p>
+<p>
+  Each part of the code serves a clear purpose within the application flow.
+</p>
+<p>
+  The general structure is as follows:
+  <code>
+    TiendaApp/
+    │
+    ├── TiendaApp.py           # Archivo principal del programa (punto de entrada)
+    ├── tienda.py              # Archivo que contiene la clase 'tienda' y sus métodos
+    ├── Tienda.xlsx            # Archivo Excel donde se guarda el inventario, precios y ventas              
+    └── README.md              # Project description and guide document
+</code>
+</p>
+
