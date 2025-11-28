@@ -57,6 +57,17 @@
     ├── tienda.py              # Archivo que contiene la clase 'tienda' y sus métodos
     ├── Tienda.xlsx            # Archivo Excel donde se guarda el inventario, precios y ventas              
     └── README.md              # Project description and guide document
-</code>
+  </code>
 </p>
-
+<h3>📘 Component Description</h3>
+<ul>
+  <li><strong>TiendaApp.py:</strong> This is the heart of the program. It contains the main menu that allows the user to choose what they want to do (view, sell, update,   etc.). Here, the objects of the store class are created, and all user interaction is orchestrated.</li>
+  <li><strong>tienda.py:</strong> Defines the store class, which contains all the program's logic. Within this class are the methods responsible for reading, updating,     selling, and summarizing inventory information.</li>
+  <li><strong>Tienda.xlsx:</strong> This is the file where the information is stored. It contains several data sheets:
+  <ul>
+    <li><em>Inventory</em> (list of products and quantities)</li>
+    <li><em>Prices</em> (purchase, sale, and profit prices)</li>
+    <li><em>Sales</em> (historical record of sales made)</li>
+  </ul>
+<li><strong>README.md:</strong> Document explaining what the application does, how it is built, and what the user can achieve with it.</li>
+</ul>
