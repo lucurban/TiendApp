@@ -71,8 +71,8 @@
       <li><em>Ventas</em> (registro histórico de ventas realizadas)</li>
     </ul>
   </li>
-  <li><strong>README.md:</strong> Documento donde se explica qué hace la aplicación, cómo está construida y qué puede lograr el usuario con ella, en ingles.</li>
   <li><strong>Leeme.md:</strong> Documento donde se explica qué hace la aplicación, cómo está construida y qué puede lograr el usuario con ella, en español.</li>
+  <li><strong>README.md:</strong> Documento donde se explica qué hace la aplicación, cómo está construida y qué puede lograr el usuario con ella, en ingles.</li>
 </ul>
 
 <h2>🧠 Conceptos aplicados</h2>
