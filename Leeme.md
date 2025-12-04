@@ -71,9 +71,8 @@
       <li><em>Ventas</em> (registro histórico de ventas realizadas)</li>
     </ul>
   </li>
-  <li><strong>README.md:</strong> Documento donde se explica qué hace la aplicación, cómo está construida y qué puede lograr el usuario con ella.</li>
-  <li><strong>requirements.txt (opcional):</strong> Archivo que lista las dependencias del proyecto (por ejemplo: pandas, openpyxl).
-Es útil si en el futuro se desea compartir o ejecutar TiendaApp en otro entorno.</li>
+  <li><strong>README.md:</strong> Documento donde se explica qué hace la aplicación, cómo está construida y qué puede lograr el usuario con ella, en ingles.</li>
+  <li><strong>Leeme.md:</strong> Documento donde se explica qué hace la aplicación, cómo está construida y qué puede lograr el usuario con ella, en español.</li>
 </ul>
 
 <h2>🧠 Conceptos aplicados</h2>
