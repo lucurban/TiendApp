@@ -54,9 +54,8 @@
     ├── TiendaApp.py           # Archivo principal del programa (punto de entrada)
     ├── tienda.py              # Archivo que contiene la clase 'tienda' y sus métodos
     ├── Tienda.xlsx            # Archivo Excel donde se guarda el inventario, precios y ventas
-    │
-    ├── README.md              # Documento de descripción y guía del proyecto
-    └── requirements.txt       # (Opcional) Lista de dependencias necesarias, como pandas y openpyxl
+    ├── Leeme.md               # Documento de descripción y guía del proyecto en español
+    └── README.md              # Documento de descripción y guía del proyecto en ingles
 </code>
 </p>
 <h3>📘 Descripción de los componentes</h3>
