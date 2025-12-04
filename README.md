@@ -55,8 +55,10 @@
     │
     ├── TiendaApp.py           # Main program file (entry point)
     ├── tienda.py              # File containing the 'store' class and its methods
-    ├── Tienda.xlsx            # Excel file where inventory, prices, and sales are stored         
-    └── README.md              # Project description and guide document
+    ├── Tienda.xlsx            # Excel file where inventory, prices, and sales are stored
+    ├── Leeme.md               # Project description and guide document in Spanish
+    └── README.md              # Project description and guide document in English
+    
   </code>
 </p>
 <h3>📘 Component Description</h3>
