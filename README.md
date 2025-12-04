@@ -71,7 +71,8 @@
     <li><em>Prices</em> (purchase, sale, and profit prices)</li>
     <li><em>Sales</em> (historical record of sales made)</li>
   </ul>
-<li><strong>README.md:</strong> Document explaining what the application does, how it is built, and what the user can achieve with it.</li>
+<li><strong>README.md:</strong> Document explaining what the application does, how it is built, and what the user can achieve with it, in english.</li>
+<li><strong>Leeme.md:</strong> Document explaining what the application does, how it is built, and what the user can achieve with it, in spanish.</li>
 </ul>
 
 <h2>🧠 Applied Concepts</h2>
