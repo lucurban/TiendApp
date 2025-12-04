@@ -207,17 +207,85 @@ Furthermore, pd.ExcelWriter is used to write to specific sheets, adding or overw
     <p>
       All this information is stored in the Tienda.xlsx file, within the Inventory and Prices sheets.
     </p>
-  <strong><li>💰 Sales Log</li></strong>
-    When a sale is made, the program:
-  </p>
-  <p>
-  The program displays:
-  <ul>
-    <li>Which products were sold.</li>
-    <li>How many units.</li>
-    <li>The subtotals and the daily total.</li>
+    <strong><li>💰 Sales Log</li></strong>
+    <p>
+      When a sale is made, the program:
+    </p>
+    <p>
+      <ol>
+        <li>Checks that the product is available in inventory.</li>
+        <li>Requests the desired quantity and calculates the subtotal.</li>
+        <li>Records the sale in an Excel sheet called Sales.</li>
+        <li>Automatically updates the inventory by subtracting the units sold.</li>
+      </ol>
+    </p>
+    <p>
+      This way, the file always reflects the actual state of the store.
+    </p>
+    <strong><li>📊 Sales Summary</li></strong>
+    <p>
+      The user can generate a summary of sales for a specific day.
+    </p>
+    <p>
+      The program displays:
+      <ul>
+        <li>Which products were sold.</li>
+        <li>How many units.</li>
+        <li>The subtotals and the daily total.</li>
+      </ul>
+    </p>
+    <p>
+      This allows for clear control of profits and best-selling products.
+    </p>
+</ol>
+
+<h2>🌱 Learning and objectives</h2>
+<p>
+Throughout the development of TiendaApp, I was able to strengthen several key concepts while building a useful and complete project. This section summarizes what I learned and also the objectives that guided each part of the process.
+</p>
+<h3>Learning</h3>
+<ul> 
+  <li><strong>Structuring a real project:</strong> It goes from an initial idea to an organized program, with clear functions and a main class that manages the entire flow of work.</li> 
+  <li><strong>Practical use of OOP:</strong> Understand how to encapsulate the logic within methods and how the attributes of a class facilitate the management of the state (product, inventory, prices, etc.).</li> 
+  <li><strong>Excel file handling:</strong> Implements try/except blocks to prevent the program from crashing when a file does not exist or when a controlled error occurs.</li> 
+  <li><strong>Interaction with the user:</strong> Designs clear flows with messages that guide the experience of anyone using the application, ensuring that it always Separate what to do.</li> 
+  <li><strong>Organization of the code:</strong> Separates each action into specialized methods, which makes the code much more understandable and easy to maintain.</li>
+</ul>
+<h3>Project objectives</h3>
+<ul> 
+  <li>Create a small tool that allows you to manage a store's inventory in a simple and clear way.</li> 
+  <li>Build a realistic sales flow: choose products, validate stocks, register each sale and update inventories.</li> 
+  <li>Maintain a historical record of sales per day, accessible for later consultation.</li> 
+  <li>Learn to work with external files as a lightweight database, using Excel.</li> 
+  <li>Put my knowledge of Python into practice and strengthen applied logic in a real project.</li> 
+  <li>To create a solid foundation for future improvements, such as adding a visual interface or automating reports.</li>
+</ul>
+<h2>🚀 Next steps</h2>
+<p> 
+  TiendaApp works very well as a basic management tool, but it still has a lot of potential for growth. These are some of the next steps that I would like to implement to continue taking it to the next level:
+</p>
+<h3>🌱 Technical improvements</h3>
+  <ul> 
+    <li><strong>Optimize the code</strong> to make it more efficient, eliminating repetitions and making better use of the capabilities of Pandas and OOP.</li> 
+    <li><strong>Separate the logic into modules</strong> (for example: inventory, sales, reports), which will make the project easier to maintain and scale.</li> 
+    <li><strong>Add more robust validations,</strong> such as checking data types or restricting invalid values ​​in user input.</li> 
+    <li><strong>Create a service layer</strong> to better manage reading and writing Excel files, avoiding code duplication.</li>
   </ul>
-  </p>
-  <p>
-    This allows for clear control of profits and best-selling products.
-  </ol>
+  <h3> 🖥️ New interface</h3>
+<ul> 
+  <li><strong>Design a simple graphical interface</strong> (maybe with Tkinter or PyQt) so that the app is more user-friendly and does not depend on the console.</li> 
+  <li><strong>Show inventory and sales tables in a visual way,</strong>(with buttons to add, update and sell products.</li>
+</ul>
+<h3> 📊 Additional features</h3>
+<ul> 
+  <li><strong>Generate automatic reports</strong> in PDF or Excel for daily, weekly or monthly sales. 
+  <li><strong>Add minimum stock control,</strong> sending alerts when a product is running out.</li> 
+  <li><strong>History by product,</strong> to see how your inventory has varied and your sales over time. 
+  <li><strong>Include authentication or roles,</strong> by itself several people will be able to use the application.
+</ul>
+<h3> ☁️ More advanced future</h3>
+  <ul> 
+    <li><strong>Migrate the database</strong> from Excel to SQLite or PostgreSQL for greater security and scalability. 
+    <li><strong>Convert TiendaApp into an API,</strong> allowing you to connect it to a modern frontend or a mobile app.</li> 
+    <li><strong>Deploy it online</strong> and offer it as a service for small stores.
+  </ul>
